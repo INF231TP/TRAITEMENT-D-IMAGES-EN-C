@@ -1,30 +1,46 @@
 #include "image.h"
 int main(){
-   
+  
+#include "IMAGE_H" // Assurez-vous que cela corresponde à votre nom de fichier d'en-tête (où se trouvent vos structures)
+#include <stdio.h>
 
-    return 0;
-}
-
-/* ---------- Programme principal de test de la fonction en gris ---------- */
-int main() {
-    char entree[100], sortie[100];
-    printf("Nom du fichier PPM à convertir : ");
-    scanf("%s", entree);
-    printf("Nom du fichier de sortie : ");
-    scanf("%s", sortie);
-
-    Image *img = read_p3(entree);
-    if (!img) {
-        printf("Erreur de lecture de l'image.\n");
-        return 1;
+/**
+ * @brief Modifie une image couleur pour la convertir en niveaux de gris.
+ * * Parcourt tous les pixels de l'image et remplace les composantes R, V, B
+ * par la moyenne de ces composantes (le niveau de gris).
+ *
+ * @param img Pointeur vers la structure image à modifier.
+ */
+void modifier_image_en_gris(image *img) {
+    if (img == NULL || img->pixels == NULL) {
+        fprintf(stderr, "Erreur : L'image est nulle ou non allouée.\n");
+        return;
     }
 
-    image_en_gris(img);
-    write_p3(sortie, img);
+    // Parcourir les lignes (hauteurs)
+    for (unsigned int h = 0; h < img->hauteurs; h++) {
+        // Parcourir les colonnes (largeurs)
+        for (unsigned int l = 0; l < img->largeurs; l++) {
+            // Pointeur vers le pixel courant
+            pixel *p = &(img->pixels[h][l]);
 
-    printf("Image convertie en gris avec succès : %s\n", sortie);
+            // Calcul du niveau de gris par moyenne arithmétique.
+            // (Note : une moyenne pondérée est plus précise pour la perception
+            // humaine, mais la moyenne simple est la plus facile pour un
+            // calcul avec des entiers non signés.)
+            uint16_t gris = (p->r + p->v + p->b) / 3;
 
-    free(img->data);
-    free(img);
-    return 0;
+            // Appliquer la nouvelle valeur de gris à toutes les composantes
+            // du pixel (R, V, B) pour le rendre monochrome.
+            p->r = gris;
+            p->v = gris;
+            p->b = gris;
+            
+            // La composante 'valmax' n'est pas modifiée car elle représente
+            // la valeur maximale possible des composantes (e.g., 255).
+        }
+    }
 }
+ 
+
+    return 0; 
