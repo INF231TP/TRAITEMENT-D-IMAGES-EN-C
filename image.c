@@ -9,7 +9,7 @@
 
 void afficher_banniere() {
     printf("=============================================\n");
-    printf(" ✨Application de Traitement d'Images PPM ✨\n");
+    printf("✨ Application de Traitement d'Images PPM ✨\n");
     printf("=============================================\n");
     printf("Entrez 'help' pour la liste des commandes.\n");
 }
@@ -62,7 +62,7 @@ void supprimer_espaces(char* str) {
 int lire_image_ppm(const char* nom_fichier, ImagePPM* image) {
     FILE* fichier = fopen(nom_fichier, "r");
     if (!fichier) {
-        printf("ERREUR: Fichier non trouvé (%s)\n", nom_fichier); // Icône supprimée
+        printf("❌ ERREUR: Fichier non trouvé (%s)\n", nom_fichier);
         return 0;
     }
     
@@ -75,7 +75,7 @@ int lire_image_ppm(const char* nom_fichier, ImagePPM* image) {
     sscanf(ligne, "%2s", image->version);
     
     if (strcmp(image->version, "P3") != 0) {
-        printf("ERREUR: Seul le format P3 est supporté\n"); // Icône supprimée
+        printf("❌ ERREUR: Seul le format P3 est supporté\n");
         fclose(fichier);
         return 0;
     }
@@ -136,7 +136,7 @@ int lire_image_ppm(const char* nom_fichier, ImagePPM* image) {
 int ecrire_image_ppm(const char* nom_fichier, const ImagePPM* image) {
     FILE* fichier = fopen(nom_fichier, "w");
     if (!fichier) {
-        printf("ERREUR: Impossible de créer le fichier %s\n", nom_fichier); // Icône supprimée
+        printf("❌ ERREUR: Impossible de créer le fichier %s\n", nom_fichier);
         return 0;
     }
     
@@ -173,7 +173,7 @@ int taille_image_ppm(const char* nom_fichier) {
         return 0;
     }
     
-    printf("Dimensions: %d x %d (Largeur x Hauteur)\n", image.largeur, image.hauteur); // Icône supprimée
+    printf("📐 Dimensions: %d x %d (Largeur x Hauteur)\n", image.largeur, image.hauteur);
     liberer_image_ppm(&image);
     return 1;
 }
@@ -265,8 +265,8 @@ int decouper_image(const char* nom_fichier, int l1, int l2, int c1, int c2, cons
     }
     
     if (l1 < 1 || l2 > image.hauteur || c1 < 1 || c2 > image.largeur || l1 >= l2 || c1 >= c2) {
-        printf("ERREUR: Coordonnées de découpage invalides. Doit respecter: 1 <= l1 < l2 <= %d et 1 <= c1 < c2 <= %d\n", 
-               image.hauteur, image.largeur); // Icône supprimée
+        printf("❌ ERREUR: Coordonnées de découpage invalides. Doit respecter: 1 <= l1 < l2 <= %d et 1 <= c1 < c2 <= %d\n", 
+               image.hauteur, image.largeur);
         liberer_image_ppm(&image);
         return 0;
     }
@@ -348,14 +348,14 @@ int appliquer_filtre_median(const char* nom_fichier_entree, const char* nom_fich
 void afficher_aide() {
     printf("\nListe des commandes disponibles (format: commande arguments):\n");
     printf("------------------------------------------------------------------------------------------------------------------------------------\n");
-    printf("1.  size <fichier.ppm>                                 : Affiche la largeur et la hauteur de l'image.\n"); // Numéro simple
-    printf("2.  dom <R|G|B> <valeur> <fichier.ppm>                 : Ajoute une dominante (R, G ou B) en augmentant les couleurs des pixels dominants.\n"); // Numéro simple
-    printf("3.  gris <fichier.ppm>                                 : Convertit l'image en niveaux de gris (sortie: <fichier>_gris.ppm).\n"); // Numéro simple
-    printf("4.  neg <fichier.ppm> <fichier_resultat.ppm>           : Crée le négatif de l'image.\n"); // Numéro simple
-    printf("5.  cut <fichier.ppm> <l1> <l2> <c1> <c2> <resultat> : Découpe l'image de la ligne l1 à l2 et de la colonne c1 à c2 (1-based).\n"); // Numéro simple
-    printf("6.  fil <fichier.ppm> <fichier_resultat.ppm>           : Applique un filtre médian 3x3 pour réduire le bruit.\n"); // Numéro simple
-    printf("7.  quit                                             : Quitte l'application.\n"); // Numéro simple
-    printf("8.  help                                             : Affiche cette aide.\n"); // Numéro simple
+    printf("1️⃣  size <fichier.ppm>                                 : Affiche la largeur et la hauteur de l'image.\n");
+    printf("2️⃣  dom <R|G|B> <valeur> <fichier.ppm>                 : Ajoute une dominante (R, G ou B) en augmentant les couleurs des pixels dominants.\n");
+    printf("3️⃣  gris <fichier.ppm>                                 : Convertit l'image en niveaux de gris (sortie: <fichier>_gris.ppm).\n");
+    printf("4️⃣  neg <fichier.ppm> <fichier_resultat.ppm>           : Crée le négatif de l'image.\n");
+    printf("5️⃣  cut <fichier.ppm> <l1> <l2> <c1> <c2> <resultat> : Découpe l'image de la ligne l1 à l2 et de la colonne c1 à c2 (1-based).\n");
+    printf("6️⃣  fil <fichier.ppm> <fichier_resultat.ppm>           : Applique un filtre médian 3x3 pour réduire le bruit.\n");
+    printf("7️⃣  quit                                             : Quitte l'application.\n");
+    printf("8️⃣  help                                             : Affiche cette aide.\n");
     printf("------------------------------------------------------------------------------------------------------------------------------------\n");
 }
 
@@ -392,82 +392,82 @@ void traiter_commande(const char* commande) {
     if (strcmp(cmd, "size") == 0) {
         if (args >= 2) {
             if (taille_image_ppm(arg1)) {
-                printf("Operation 'size' reussie.\n"); // Icône supprimée
+                printf("✅ Opération 'size' réussie.\n");
             }
         } else {
-            printf("ERREUR: Arguments manquants pour 'size'. Utilisation: size fichier.ppm\n"); // Icône supprimée
+            printf("❌ ERREUR: Arguments manquants pour 'size'. Utilisation: size fichier.ppm\n");
         }
     }
     else if (strcmp(cmd, "dom") == 0) {
         if (args >= 4) {
             if (strlen(arg1) != 1 || (arg1[0] != 'R' && arg1[0] != 'G' && arg1[0] != 'B')) {
-                printf("ERREUR: La couleur doit etre R, G ou B\n"); // Icône supprimée
+                printf("❌ ERREUR: La couleur doit être R, G ou B\n");
             } else {
                 couleur = arg1[0];
                 val = atoi(arg2);
                 if (appliquer_dominante(arg3, couleur, val)) {
-                    printf("Operation 'dom' reussie. Fichier cree: %s_dom.ppm\n", obtenir_nom_sans_ext(arg3)); // Icône supprimée
+                    printf("✅ Opération 'dom' réussie. Fichier créé: %s_dom.ppm\n", obtenir_nom_sans_ext(arg3));
                 } else {
-                    printf("ERREUR lors du traitement de la dominante.\n"); // Icône supprimée
+                    printf("❌ ERREUR lors du traitement de la dominante.\n");
                 }
             }
         } else {
-            printf("ERREUR: Arguments manquants pour 'dom'. Utilisation: dom c val fichier.ppm\n"); // Icône supprimée
+            printf("❌ ERREUR: Arguments manquants pour 'dom'. Utilisation: dom c val fichier.ppm\n");
         }
     }
     else if (strcmp(cmd, "gris") == 0) {
         if (args >= 2) {
             if (convertir_gris(arg1)) {
-                printf("Operation 'gris' reussie. Fichier cree: %s_gris.ppm\n", obtenir_nom_sans_ext(arg1)); // Icône supprimée
+                printf("✅ Opération 'gris' réussie. Fichier créé: %s_gris.ppm\n", obtenir_nom_sans_ext(arg1));
             } else {
-                printf("ERREUR lors de la conversion en gris.\n"); // Icône supprimée
+                printf("❌ ERREUR lors de la conversion en gris.\n");
             }
         } else {
-            printf("ERREUR: Arguments manquants pour 'gris'. Utilisation: gris fichier.ppm\n"); // Icône supprimée
+            printf("❌ ERREUR: Arguments manquants pour 'gris'. Utilisation: gris fichier.ppm\n");
         }
     }
     else if (strcmp(cmd, "neg") == 0) {
         if (args >= 3) {
             if (appliquer_negatif(arg1, arg2)) {
-                printf("Operation 'neg' reussie. Fichier cree: %s\n", arg2); // Icône supprimée
+                printf("✅ Opération 'neg' réussie. Fichier créé: %s\n", arg2);
             } else {
-                printf("ERREUR lors de la creation du negatif.\n"); // Icône supprimée
+                printf("❌ ERREUR lors de la création du négatif.\n");
             }
         } else {
-            printf("ERREUR: Arguments manquants pour 'neg'. Utilisation: neg fichier.ppm fichier_resultat.ppm\n"); // Icône supprimée
+            printf("❌ ERREUR: Arguments manquants pour 'neg'. Utilisation: neg fichier.ppm fichier_resultat.ppm\n");
         }
     }
     else if (strcmp(cmd, "cut") == 0) {
         if (args >= 7) {
             l1 = atoi(arg2); l2 = atoi(arg3); c1 = atoi(arg4); c2 = atoi(arg5);
             if (l1 <= 0 || l2 <= 0 || c1 <= 0 || c2 <= 0) {
-                printf("ERREUR: Les coordonnees doivent etre des nombres positifs (> 0).\n"); // Icône supprimée
+                printf("❌ ERREUR: Les coordonnées doivent être des nombres positifs (> 0).\n");
             } else if (decouper_image(arg1, l1, l2, c1, c2, arg6)) {
-                printf("Operation 'cut' reussie. Fichier cree: %s\n", arg6); // Icône supprimée
+                printf("✅ Opération 'cut' réussie. Fichier créé: %s\n", arg6);
             }
         } else {
-            printf("ERREUR: Arguments manquants pour 'cut'. Utilisation: cut fichier.ppm l1 l2 c1 c2 fichier_resultat.ppm\n"); // Icône supprimée
+            printf("❌ ERREUR: Arguments manquants pour 'cut'. Utilisation: cut fichier.ppm l1 l2 c1 c2 fichier_resultat.ppm\n");
         }
     }
     else if (strcmp(cmd, "fil") == 0) {
         if (args >= 3) {
             if (appliquer_filtre_median(arg1, arg2)) {
-                printf("Operation 'fil' reussie. Fichier cree: %s\n", arg2); // Icône supprimée
+                printf("✅ Opération 'fil' réussie. Fichier créé: %s\n", arg2);
             } else {
-                printf("ERREUR lors de l'application du filtre median.\n"); // Icône supprimée
+                printf("❌ ERREUR lors de l'application du filtre médian.\n");
             }
         } else {
-            printf("ERREUR: Arguments manquants pour 'fil'. Utilisation: fil fichier.ppm fichier_resultat.ppm\n"); // Icône supprimée
+            printf("❌ ERREUR: Arguments manquants pour 'fil'. Utilisation: fil fichier.ppm fichier_resultat.ppm\n");
         }
     }
     else if (strcmp(cmd, "help") == 0) {
         afficher_aide();
     }
     else if (strcmp(cmd, "quit") == 0) {
-        printf("Au revoir! Merci d'avoir utilise notre application.\n"); // Icône supprimée
+        printf("👋 Au revoir! Merci d'avoir utilisé notre application.\n");
         exit(0);
     }
     else {
-        printf("Commande '%s' non reconnue. Tapez 'help' pour la liste des commandes.\n", cmd); // Icône supprimée
+        printf("⚠️ Commande '%s' non reconnue. Tapez 'help' pour la liste des commandes.\n", cmd);
     }
 }

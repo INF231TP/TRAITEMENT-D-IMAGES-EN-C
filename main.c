@@ -3,7 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "image.h"
-<<<<<<< HEAD
 
 #define MAX_COMMAND_LENGTH 256
 
@@ -28,12 +27,3 @@ int main() {
     
     return 0;
 }
-=======
-int main(){
-
-
-
- 
-
-    return 0; 
->>>>>>> 47ef503713ee1cf4b90dbf8a13a14b3e6da02e87
